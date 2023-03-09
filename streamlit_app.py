@@ -27,7 +27,7 @@ streamlit.dataframe(fruits_to_show)
 
 
 
-streamlit.stop()
+
 
 
 
@@ -46,7 +46,7 @@ streamlit.dataframe(fruityvice_normalized)
 
 
 
-
+streamlit.stop()
 
 
 # my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
