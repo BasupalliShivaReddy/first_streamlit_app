@@ -33,6 +33,7 @@ streamlit.dataframe(fruits_to_show)
 
 
 #Frutyvice test
+
 def get_fruityvice_data(this_fruit_choice):
   fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+str(this_fruit_choice))
   # streamlit.text(fruityvice_response.json()) #just writes dat to the screen
@@ -57,20 +58,19 @@ except URLError as e:
 
 #streamlit.stop()
 
-
-# my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-# my_cur = my_cnx.cursor()
-# my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-# my_data_row = my_cur.fetchone()
-# streamlit.text("Hello from Snowflake:")
-# streamlit.text(my_data_row)
-
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * from fruit_load_list")
-# my_data_rows = my_cur.fetchall()
-# streamlit.text("The fruit load list contains:")
-# streamlit.dataframe(my_data_rows)
+streamlit.header("The Fruit Load List Contains:") 
+def get_fruitload_list():
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("SELECT * from fruit_load_list")
+    return my_cur.fetchall()
+  
+# Add abutton to load the fruits
+if streamlit.button():
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  my_data_rows = get_fruitload_list()
+  streamlit.dataframe(my_data_rows)
+  
+  
 # Allowing user to add a fruit
 def insert_row_snowflake(new_fruit):
   with my_cnx.cursor() as my_cur:
