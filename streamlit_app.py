@@ -1,3 +1,3 @@
 import streamlit
 
-streamlit.title(Shiva's New App)
+streamlit.title('New Healthy Dinner')
